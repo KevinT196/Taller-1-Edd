@@ -1,0 +1,10 @@
+from bigtree import Node, print_tree
+
+raiz = Node("Raíz")
+nodo_a = Node("Hijo 1", parent=raiz)
+nodo_b = Node("Hijo 2", parent=raiz)
+nodo_c = Node("Hijo 3", parent=nodo_a)
+nodo_d = Node("Hijo 4", parent=nodo_a)
+nodo_e = Node("Hijo 5", parent=nodo_b)
+
+print_tree(raiz)

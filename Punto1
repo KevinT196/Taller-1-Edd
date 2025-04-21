@@ -1,0 +1,57 @@
+class Nodo:
+    def __init__(self, valor):
+        self.valor = valor
+        self.hijos = []
+
+class Arbol:
+    def __init__(self, raiz):
+        self.raiz = Nodo(raiz)
+
+    def agregar_hijo(self, nodo_padre, valor_hijo):
+        nuevo_hijo = Nodo(valor_hijo)
+        nodo_padre.hijos.append(nuevo_hijo)
+        return nuevo_hijo
+
+    def peso(self, nodo=None):
+        if nodo is None:
+            nodo = self.raiz
+        return 1 + sum(self.peso(hijo) for hijo in nodo.hijos)
+
+    def orden(self, nodo=None):
+        if nodo is None:
+            nodo = self.raiz
+        max_hijos = len(nodo.hijos)
+        for hijo in nodo.hijos:
+            max_hijos = max(max_hijos, self.orden(hijo))
+        return max_hijos
+
+    def altura(self, nodo=None):
+        if nodo is None:
+            nodo = self.raiz
+        if not nodo.hijos:
+            return 1
+        return 1 + max(self.altura(hijo) for hijo in nodo.hijos)
+
+# Interacción básica
+if __name__ == "__main__":
+    valor_raiz = input("Ingrese el valor de la raíz del árbol: ")
+    arbol = Arbol(valor_raiz)
+
+    nodos = {valor_raiz: arbol.raiz}
+
+    while True:
+        opcion = input("¿Desea agregar un hijo? (s/n): ").lower()
+        if opcion == 'n':
+            break
+        padre = input("Ingrese el valor del nodo padre: ")
+        hijo = input("Ingrese el valor del hijo: ")
+
+        if padre in nodos:
+            nuevo_nodo = arbol.agregar_hijo(nodos[padre], hijo)
+            nodos[hijo] = nuevo_nodo
+        else:
+            print("Nodo padre no encontrado.")
+
+    print("Peso del árbol:", arbol.peso())
+    print("Orden del árbol:", arbol.orden())
+    print("Altura del árbol:", arbol.altura())
